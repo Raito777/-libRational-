@@ -28,7 +28,7 @@
 /// 	- [path to build]/doc/doc-doxygen/html/index.html or 
 /// 	- or [path to build]/INTERFACE/doc/doc-doxygen/html/index.html
 
-//git test
+//git test 2
 
 /// \class Ratio
 /// \brief class defining a ratio number.
