@@ -10,6 +10,8 @@ int main() {
     Ratio<int> secondRatio(5,2);
 
     std::cout << firstRatio + secondRatio << std::endl;
+    std::cout << firstRatio * secondRatio << std::endl;
+    std::cout << firstRatio / secondRatio << std::endl;
 
     return 0;
 }
