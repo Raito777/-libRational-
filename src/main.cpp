@@ -1,19 +1,15 @@
 #include <iostream>
 
-#include "../include/plop.hpp"
 #include "../include/Ratio.hpp"
 
 
 int main() {
-
-    // appel de ploup
-    ploup();
     
-    Ratio<int> firstRatio();
+    Ratio<int> firstRatio(2,4);
 
-    Ratio<long> secondRatio(5,2);
+    Ratio<int> secondRatio(5,2);
 
-    std::cout << "Second ratio :" << secondRatio.nominator() << "/" << secondRatio.denominator() << std::endl;
+    std::cout << firstRatio + secondRatio << std::endl;
 
     return 0;
 }

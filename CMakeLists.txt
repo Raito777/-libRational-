@@ -48,10 +48,8 @@ else()
 	message(WARNING "Doxygen not found, skip documentation")
 endif()
 
-
-
 # add librationnel
-add_executable(libRational src/main.cpp src/plop.cpp include/plop.hpp include/Ratio.hpp)
+add_executable(libRational src/main.cpp include/Ratio.hpp)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 
