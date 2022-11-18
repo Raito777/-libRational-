@@ -84,13 +84,29 @@ class Ratio{
 		template<typename U>
         friend std::ostream& operator<< (std::ostream& stream, const Ratio<U> &r);
 
+		/// \brief operator sin for rational numbers
+		/// \param r the rational number to use
 		static Ratio sin(const Ratio & r);
+		/// \brief operator cos for rational numbers
+		/// \param r the rational number to use
 		static Ratio cos(const Ratio & r);
+		/// \brief operator tan for rational numbers
+		/// \param r the rational number to use
 		static Ratio tan(const Ratio & r);
+		/// \brief operator exp for rational numbers
+		/// \param r the rational number to use
 		static Ratio exp(const Ratio & r);
+		/// \brief operator log for rational numbers
+		/// \param r the rational number to use
 		static Ratio log(const Ratio & r);
+		/// \brief operator abs for rational numbers
+		/// \param r the rational number to use
 		static Ratio abs(const Ratio & r);
+		/// \brief operator pow for rational numbers
+		/// \param r the rational number to use
 		static Ratio pow(const Ratio & r, const T &n);
+		/// \brief operator sqrt for rational numbers
+		/// \param r the rational number to use
 		static Ratio sqrt(const Ratio & r);
 
         void testRatioNumber();
@@ -146,10 +162,10 @@ Ratio<T> Ratio<T>::exp(const Ratio<T> & r){
 	return Ratio<T>(std::exp(r.m_num/r.m_den),1);
 }
 
-// template <typename T>
-// Ratio<T> Ratio<T>::log(const Ratio<T> & r){
-// 	return Ratio<T>(std::log(r.m_num),r.m_den/r.m_num);
-// }
+template <typename T>
+Ratio<T> Ratio<T>::log(const Ratio<T> & r){
+	return Ratio<T>(std::log(r.m_num)-std::log(r.m_den),1);
+}
 
 template <typename T>
 Ratio<T> Ratio<T>::abs(const Ratio<T> & r){
