@@ -84,6 +84,15 @@ class Ratio{
 		template<typename U>
         friend std::ostream& operator<< (std::ostream& stream, const Ratio<U> &r);
 
+		static Ratio sin(const Ratio & r);
+		static Ratio cos(const Ratio & r);
+		static Ratio tan(const Ratio & r);
+		static Ratio exp(const Ratio & r);
+		static Ratio log(const Ratio & r);
+		static Ratio abs(const Ratio & r);
+		static Ratio pow(const Ratio & r, const T &n);
+		static Ratio sqrt(const Ratio & r);
+
         void testRatioNumber();
 
 
@@ -116,5 +125,47 @@ std::ostream& operator<< (std::ostream& stream, const Ratio<T> &r){
 	stream << "(" << r.m_num << "/" << r.m_den << ")";
     return stream;
 }
+
+template <typename T>
+Ratio<T> Ratio<T>::sin(const Ratio<T> & r){
+	return Ratio<T>(std::sin(r.m_num/r.m_den),1);
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::cos(const Ratio<T> & r){
+	return Ratio<T>(std::cos(r.m_num/r.m_den),1);
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::tan(const Ratio<T> & r){
+	return Ratio<T>(std::tan(r.m_num/r.m_den),1);
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::exp(const Ratio<T> & r){
+	return Ratio<T>(std::exp(r.m_num/r.m_den),1);
+}
+
+// template <typename T>
+// Ratio<T> Ratio<T>::log(const Ratio<T> & r){
+// 	return Ratio<T>(std::log(r.m_num),r.m_den/r.m_num);
+// }
+
+template <typename T>
+Ratio<T> Ratio<T>::abs(const Ratio<T> & r){
+	return Ratio<T>(std::abs(r.m_num),std::abs(r.m_den));
+}
+
+// template <typename T>
+// Ratio<T> Ratio<T>::pow(const Ratio<T> & r, const T &n){
+// 	return Ratio<T>(std::pow(r.m_num,n), n * std::pow(r.m_num,n-static_cast<T>(1)) * r.m_den);
+// }
+
+template <typename T>
+Ratio<T> Ratio<T>::sqrt(const Ratio<T> & r){
+	return Ratio<T>(std::sqrt(r.m_num),std::sqrt(r.m_den));
+}
+
+
 
 #endif
