@@ -21,6 +21,7 @@ int main() {
     std::cout << Ratio<float>::tan(thirdRatio) << std::endl;
     std::cout << Ratio<float>::abs(secondRatio) << std::endl;
     std::cout << Ratio<float>::abs(firstRatio) << std::endl;
+    std::cout << Ratio<float>::pow(firstRatio,2) <<std::endl;
     
 
     return 0;

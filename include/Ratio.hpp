@@ -156,10 +156,10 @@ Ratio<T> Ratio<T>::abs(const Ratio<T> & r){
 	return Ratio<T>(std::abs(r.m_num),std::abs(r.m_den));
 }
 
-// template <typename T>
-// Ratio<T> Ratio<T>::pow(const Ratio<T> & r, const T &n){
-// 	return Ratio<T>(std::pow(r.m_num,n), n * std::pow(r.m_num,n-static_cast<T>(1)) * r.m_den);
-// }
+template <typename T>
+Ratio<T> Ratio<T>::pow(const Ratio<T> & r, const T &n){
+	return Ratio<T>(std::pow(r.m_num,n),std::pow(r.m_den,n));
+}
 
 template <typename T>
 Ratio<T> Ratio<T>::sqrt(const Ratio<T> & r){
