@@ -17,5 +17,5 @@ message(STATUS "google test cmake part ..." )
 add_subdirectory(googletest)
 
 # add myTest
-message(STATUS "myUnitTests cmake part ..." )
-add_subdirectory(myUnitTests)
+message(STATUS "unitTests cmake part ..." )
+add_subdirectory(unitTests)
