@@ -9,6 +9,9 @@
 #include <fstream>
 #include <cmath>
 
+
+#include "RatioException.hpp"
+
 // Doxygen menu
 /// \version 0.1
 /// \mainpage
@@ -44,7 +47,7 @@ class Ratio{
 		/// \brief constructor from a numerator and denominator
 		/// \param numerator : the numerator of the rational number
 		/// \param denominator : the denominator of the rational number
-		Ratio(const T& numerator, const T &denominator) : m_num(numerator), m_den(denominator) {};
+		Ratio(const T& numerator, const T &denominator) : m_num(numerator), m_den(denominator) {this->reduce();};
 
 		/// \brief constructor from another rational number
 		/// \param ratio the other rational number
@@ -75,6 +78,21 @@ class Ratio{
 		/// \param r the rational number to divide
 		Ratio operator/(const Ratio &r) const;
 
+		/// \brief operator < for rational numbers
+		/// \param r the rational number to compare
+		bool operator<(const Ratio &r) const;
+		bool operator<(const T &value) const;
+		bool operator<=(const Ratio &r) const;
+		bool operator<=(const T &value) const;
+		bool operator>(const Ratio &r) const;
+		bool operator>(const T &value) const;
+		bool operator>=(const Ratio &r) const;
+		bool operator>=(const T &value) const;
+
+		bool operator==(const Ratio &r) const;
+		bool operator==(const T &value) const;
+		bool operator!=(const Ratio &r) const;
+		bool operator!=(const T &value) const;
 		//inline friend Ratio operator*(const T &value, const Ratio &r) {return r*value;};
 		//inline friend Ratio operator/(const T &value, const Ratio &r) {return Ratio(value)/r;};
 		//inline friend Ratio operator-(const Ratio &r) {return Ratio(-r.m_num,-r.m_den);}; // unary minus
@@ -86,37 +104,41 @@ class Ratio{
 
 		/// \brief operator sin for rational numbers
 		/// \param r the rational number to use
-		static Ratio sin(const Ratio & r);
+		static Ratio sin(const Ratio &r);
 		/// \brief operator cos for rational numbers
 		/// \param r the rational number to use
-		static Ratio cos(const Ratio & r);
+		static Ratio cos(const Ratio &r);
 		/// \brief operator tan for rational numbers
 		/// \param r the rational number to use
-		static Ratio tan(const Ratio & r);
+		static Ratio tan(const Ratio &r);
 		/// \brief operator exp for rational numbers
 		/// \param r the rational number to use
-		static Ratio exp(const Ratio & r);
+		static Ratio exp(const Ratio &r);
 		/// \brief operator log for rational numbers
 		/// \param r the rational number to use
-		static Ratio log(const Ratio & r);
+		static Ratio log(const Ratio &r);
 		/// \brief operator abs for rational numbers
 		/// \param r the rational number to use
-		static Ratio abs(const Ratio & r);
+		static Ratio abs(const Ratio &r);
 		/// \brief operator pow for rational numbers
 		/// \param r the rational number to use
-		static Ratio pow(const Ratio & r, const T &n);
+		static Ratio pow(const Ratio &r, const T &n);
 		/// \brief operator sqrt for rational numbers
 		/// \param r the rational number to use
-		static Ratio sqrt(const Ratio & r);
+		static Ratio sqrt(const Ratio &r);
 
-        void testRatioNumber();
+		static Ratio invert(const Ratio &r);
 
+		void reduce();
+		static Ratio reduce(const Ratio &r);
+
+		static Ratio convertFloatToRatio(const double &x, unsigned int nbIter);
 
 };
-
+//------------------------------ARITHMETICS OPERATORS--------------------------------------//
 template <typename T>
 Ratio<T> Ratio<T>::operator+(const Ratio<T> &r) const {
-	return Ratio<T>(this->m_num * r.m_den +this->m_den * r.m_num, this->m_den * r.m_den);
+	return Ratio<T>(this->m_num * r.m_den + this->m_den * r.m_num, this->m_den * r.m_den);
 }
 
 template <typename T>
@@ -135,13 +157,87 @@ template <typename T>
 Ratio<T> Ratio<T>::operator/(const Ratio<T> &r) const {
 	return Ratio<T>(this->m_num * r.m_den, r.m_num * this->m_den);
 }
+//----------------------------------------------------------------------------------------//
+
+//------------------------------COMPARISON OPERATORS--------------------------------------//
+
+template <typename T>
+bool Ratio<T>::operator<(const Ratio<T> &r) const {
+	return (this->m_num * r.m_den < this->m_den * r.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator<(const T &value) const {
+	Ratio<T> ratioValue(value, 1);
+	return (this->m_num * ratioValue.m_den < this->m_den * ratioValue.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator<=(const Ratio<T> &r) const {
+	return (this->m_num * r.m_den <= this->m_den * r.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator<=(const T &value) const {
+	Ratio<T> ratioValue(value, 1);
+	return (this->m_num * ratioValue.m_den <= this->m_den * ratioValue.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator>(const Ratio<T> &r) const {
+	return (this->m_num * r.m_den > this->m_den * r.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator>(const T &value) const {
+	Ratio<T> ratioValue(value, 1);
+	return (this->m_num * ratioValue.m_den > this->m_den * ratioValue.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator>=(const Ratio<T> &r) const {
+	return (this->m_num * r.m_den >= this->m_den * r.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator>=(const T &value) const {
+	Ratio<T> ratioValue(value, 1);
+	return (this->m_num * ratioValue.m_den >= this->m_den * ratioValue.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator==(const Ratio<T> &r) const {
+	return (this->m_num * r.m_den == this->m_den * r.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator==(const T &value) const {
+	Ratio<T> ratioValue(value, 1);
+	return (this->m_num * ratioValue.m_den == this->m_den * ratioValue.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator!=(const Ratio<T> &r) const {
+	return (this->m_num * r.m_den != this->m_den * r.m_num);
+}
+
+template <typename T>
+bool Ratio<T>::operator!=(const T &value) const {
+	Ratio<T> ratioValue(value, 1);
+	return (this->m_num * ratioValue.m_den != this->m_den * ratioValue.m_num);
+}
+//----------------------------------------------------------------------------------------//
+
+
+
 
 template<typename T>
-std::ostream& operator<< (std::ostream& stream, const Ratio<T> &r){
+std::ostream& operator<<(std::ostream& stream, const Ratio<T> &r){
 	stream << "(" << r.m_num << "/" << r.m_den << ")";
     return stream;
 }
 
+//------------------------------ARITHMETIC+ OPERATORS--------------------------------------//
 template <typename T>
 Ratio<T> Ratio<T>::sin(const Ratio<T> & r){
 	return Ratio<T>(std::sin(r.m_num/r.m_den),1);
@@ -178,10 +274,78 @@ Ratio<T> Ratio<T>::pow(const Ratio<T> & r, const T &n){
 }
 
 template <typename T>
-Ratio<T> Ratio<T>::sqrt(const Ratio<T> & r){
+Ratio<T> Ratio<T>::invert(const Ratio<T> &r){
+	return Ratio<T>(r.m_den,r.m_num);
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::sqrt(const Ratio<T> &r){
+
+    if(r < 0)
+	{
+		throw RatioException("Ratio::sqrt: can't sqrt negative rational number : ", 1, ErrorLevel::fatal);
+	}
+
 	return Ratio<T>(std::sqrt(r.m_num),std::sqrt(r.m_den));
 }
 
+//----------------------------------------------------------------------------------------//
+
+//------------------------------FONCTIONS--------------------------------------//
+
+template <typename T>
+void Ratio<T>::reduce(){
+	if(this->m_num < 0 && this->m_den < 0)
+	{
+		this->m_num *= -1;
+		this->m_den *= -1;
+	}
+	if(this->m_den < 0 && this->m_num > 0)
+	{	
+		this->m_num *= -1;
+		this->m_den *= -1;
+	}
+	T theGcd = std::gcd(this->m_num, this->m_den);
+	this->m_num = this->m_num / theGcd;
+	this->m_den = this->m_den / theGcd;
+
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::reduce(const Ratio<T> & r){
+
+	T theGcd = std::gcd(r.m_num, r.m_den);
+	T newNum = r.m_num / theGcd;
+	T newDen = r.m_den / theGcd;
+
+	return Ratio<T>(newNum, newDen);
+
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::convertFloatToRatio(const double &x, unsigned int nbIter){
+
+
+	if(x == 0)
+		return Ratio<T>(0,1);
+
+	if(nbIter == 0)
+		return Ratio<T>(0,1);
+
+	if(x < 1)
+		return invert(convertFloatToRatio(1/x, nbIter));
+
+	if(x >= 1)
+	{
+		double f = x, intPart;
+   		modf(f, &intPart);
+		return (Ratio<T>(intPart,1) + convertFloatToRatio(x - intPart, nbIter - 1));
+	}
+
+	return Ratio<T>(1,1);
+}
+
+//----------------------------------------------------------------------------------------//
 
 
 #endif
