@@ -10,8 +10,6 @@
 #include <cmath>
 
 
-#include "RatioException.hpp"
-
 // Doxygen menu
 /// \version 0.1
 /// \mainpage
@@ -68,6 +66,9 @@ class Ratio{
 		/// \brief operator addition for rational numbers
 		/// \param r the rational number to be added
 		Ratio operator+(const Ratio &r) const;
+		///\brief operator addition for rational numbers plus float/int
+		/// \param r the float number to be added
+		Ratio operator+(const T &value) const;
 		/// \brief operator soustraction for rational numbers
 		/// \param r the rational number to substract
 		Ratio operator-(const Ratio &r) const;
@@ -132,13 +133,20 @@ class Ratio{
 		void reduce();
 		static Ratio reduce(const Ratio &r);
 
-		static Ratio convertFloatToRatio(const double &x, unsigned int nbIter);
+		static Ratio convertFloatToRatio(const float &x, unsigned int nbIter);
 
+		static float convertRatioToFloat(const Ratio &r, unsigned int nbIter);
 };
 //------------------------------ARITHMETICS OPERATORS--------------------------------------//
 template <typename T>
 Ratio<T> Ratio<T>::operator+(const Ratio<T> &r) const {
 	return Ratio<T>(this->m_num * r.m_den + this->m_den * r.m_num, this->m_den * r.m_den);
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::operator+(const T &value) const {
+	Ratio<T> r(convertFloatToRatio(value,4));
+	return Ratio<T>(this->m_num * r.m_num + this->m_den * r.m_num, this->m_den * r.m_den);
 }
 
 template <typename T>
@@ -149,6 +157,9 @@ Ratio<T> Ratio<T>::operator-(const Ratio<T> &r) const {
 
 template <typename T>
 Ratio<T> Ratio<T>::operator*(const Ratio<T> &r) const {
+	if (this->m_den == 0 || r.m_den == 0){
+        throw std::overflow_error("You can't divide by zero ! You're so CRAZY ");
+    }
 	return Ratio<T>(this->m_num* r.m_num, this->m_den*r.m_den);
 }
 
@@ -281,9 +292,9 @@ Ratio<T> Ratio<T>::invert(const Ratio<T> &r){
 template <typename T>
 Ratio<T> Ratio<T>::sqrt(const Ratio<T> &r){
 
-    if(r < 0)
+    if(r.m_num || r.m_den < 0)
 	{
-		throw RatioException("Ratio::sqrt: can't sqrt negative rational number : ", 1, ErrorLevel::fatal);
+		throw std::overflow_error("You can't sqrt a negative number ! You're so WILD ");
 	}
 
 	return Ratio<T>(std::sqrt(r.m_num),std::sqrt(r.m_den));
@@ -323,26 +334,40 @@ Ratio<T> Ratio<T>::reduce(const Ratio<T> & r){
 }
 
 template <typename T>
-Ratio<T> Ratio<T>::convertFloatToRatio(const double &x, unsigned int nbIter){
+Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
 
 
 	if(x == 0)
+	{
 		return Ratio<T>(0,1);
+	}
 
 	if(nbIter == 0)
+	{
 		return Ratio<T>(0,1);
+	}
 
 	if(x < 1)
+	{
 		return invert(convertFloatToRatio(1/x, nbIter));
+	}
 
 	if(x >= 1)
 	{
-		double f = x, intPart;
-   		modf(f, &intPart);
-		return (Ratio<T>(intPart,1) + convertFloatToRatio(x - intPart, nbIter - 1));
+		double q = floor(x);
+		return (Ratio<T>(q,1) + convertFloatToRatio(x - q, nbIter - 1));
 	}
 
-	return Ratio<T>(1,1);
+	return Ratio<T>(0,1);
+}
+
+template <typename T>
+float Ratio<T>::convertRatioToFloat(const Ratio &r, unsigned int nbIter){
+
+    if (r.m_den == 0)
+        throw std::overflow_error("You can't divide by Zero ! ");
+		
+    return r.m_num/(float)r.m_den;
 }
 
 //----------------------------------------------------------------------------------------//

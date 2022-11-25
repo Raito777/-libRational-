@@ -34,10 +34,9 @@ TEST (RatioArithmetic, plus) {
         const int numerator2 = uniformIntDistribution(generator);
         const int denominator2 = uniformIntDistribution(generator);
 
-	    Ratio<int> r1(numerator1,denominator1), r2(numerator2,denominator2), r3(r1 + r2);
-
-	    ASSERT_EQ (r1.numerator() * r2.denominator() + r1.denominator() * r2.numerator(), r3.numerator());
-        ASSERT_EQ (r1.denominator() * r2.denominator(), r3.denominator());
+	    //Ratio<int> r1(numerator1,denominator1), r2(numerator2,denominator2), r3((numerator1*denominator2)+(numerator2*denominator1),denominator1*denominator2);
+        Ratio<int> r1(numerator1,denominator1), r2(numerator2,denominator2), r3(r1 + r2);
+	    ASSERT_EQ (r1 + r2, r3);
     }
 
 }
