@@ -19,7 +19,7 @@ int main() {
 
     Ratio<int> sixthRatio(1,2);
 
-    Ratio<int> seventhRatio(5,0);
+    Ratio<int> seventhRatio(5,2);
 
     std::cout << "firstRatio : " << firstRatio << std::endl;
     std::cout << "secondRatio : " << secondRatio << std::endl;
@@ -41,7 +41,14 @@ int main() {
 
     std::cout <<"Convertion float to ratio: " << Ratio<int>::convertFloatToRatio(2.5,4) << std::endl;
     std::cout <<" ratio + float : " << thirdRatio + 2.5 << std::endl;
-    std::cout << "convertion ratio to float : " << Ratio<int>::convertRatioToFloat(thirdRatio,4);
+    float b = 2.5;
+    std::cout << " si tu es un float tape dans tes mains :" << thirdRatio + b <<std::endl;
+    std::cout <<" ratio + float  toi tes juste: " << thirdRatio + seventhRatio << std::endl;
+
+    std::cout << "convertion ratio to float : " << Ratio<int>::convertRatioToFloat(thirdRatio);
+    std::cout << Ratio<int>::convertFloatToRatio(0.125658,10)<<std::endl;
+
+
     //std::cout <<" float + ratio : " << 2.5 + firstRatio << std::endl;
    
     

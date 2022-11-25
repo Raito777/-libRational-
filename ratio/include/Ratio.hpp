@@ -68,10 +68,12 @@ class Ratio{
 		Ratio operator+(const Ratio &r) const;
 		///\brief operator addition for rational numbers plus float/int
 		/// \param r the float number to be added
-		Ratio operator+(const T &value) const;
+		Ratio operator+(const float &value) const;
 		/// \brief operator soustraction for rational numbers
 		/// \param r the rational number to substract
 		Ratio operator-(const Ratio &r) const;
+		/// \brief operator unary minus operator
+		Ratio operator-() const;
 		/// \brief operator multiply for rational numbers
 		/// \param r the rational number to multiply
 		Ratio operator*(const Ratio &r) const;
@@ -130,12 +132,14 @@ class Ratio{
 
 		static Ratio invert(const Ratio &r);
 
+		//static float invert(const float &x);
+
 		void reduce();
 		static Ratio reduce(const Ratio &r);
 
 		static Ratio convertFloatToRatio(const float &x, unsigned int nbIter);
 
-		static float convertRatioToFloat(const Ratio &r, unsigned int nbIter);
+		static float convertRatioToFloat(const Ratio &r);
 };
 //------------------------------ARITHMETICS OPERATORS--------------------------------------//
 template <typename T>
@@ -144,14 +148,19 @@ Ratio<T> Ratio<T>::operator+(const Ratio<T> &r) const {
 }
 
 template <typename T>
-Ratio<T> Ratio<T>::operator+(const T &value) const {
-	Ratio<T> r(convertFloatToRatio(value,4));
-	return Ratio<T>(this->m_num * r.m_num + this->m_den * r.m_num, this->m_den * r.m_den);
+Ratio<T> Ratio<T>::operator+(const float &value) const {
+	Ratio<T> r = convertFloatToRatio(value,4);
+	std::cout << "le ratio de value est :" << convertFloatToRatio(value,10) << std::endl;
+	return Ratio<T>(this->m_num * r.m_den + this->m_den * r.m_num, this->m_den * r.m_den);
 }
 
 template <typename T>
 Ratio<T> Ratio<T>::operator-(const Ratio<T> &r) const {
 	return Ratio<T>(this->m_num * r.m_den - this->m_den * r.m_num, this->m_den * r.m_den);
+}
+template <typename T>
+Ratio<T> Ratio<T>::operator-() const{
+	return Ratio<T>(-m_num,m_den);
 }
 
 
@@ -289,6 +298,11 @@ Ratio<T> Ratio<T>::invert(const Ratio<T> &r){
 	return Ratio<T>(r.m_den,r.m_num);
 }
 
+// template <typename T>
+// float Ratio<T>::invert(const float &x){
+// 	return Ratio<T>()
+// }
+
 template <typename T>
 Ratio<T> Ratio<T>::sqrt(const Ratio<T> &r){
 
@@ -326,6 +340,9 @@ template <typename T>
 Ratio<T> Ratio<T>::reduce(const Ratio<T> & r){
 
 	T theGcd = std::gcd(r.m_num, r.m_den);
+	if(theGcd == 1){
+		return Ratio<T>(r.m_num,r.m_den);
+	}
 	T newNum = r.m_num / theGcd;
 	T newDen = r.m_den / theGcd;
 
@@ -350,6 +367,7 @@ Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
 	if(x < 1)
 	{
 		return invert(convertFloatToRatio(1/x, nbIter));
+		
 	}
 
 	if(x >= 1)
@@ -357,12 +375,11 @@ Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
 		double q = floor(x);
 		return (Ratio<T>(q,1) + convertFloatToRatio(x - q, nbIter - 1));
 	}
-
 	return Ratio<T>(0,1);
 }
 
 template <typename T>
-float Ratio<T>::convertRatioToFloat(const Ratio &r, unsigned int nbIter){
+float Ratio<T>::convertRatioToFloat(const Ratio &r){
 
     if (r.m_den == 0)
         throw std::overflow_error("You can't divide by Zero ! ");
