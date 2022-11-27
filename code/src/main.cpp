@@ -47,7 +47,8 @@ int main() {
    // std::cout << Ratio<int>::convertFloatToRatio(0.125658,10)<<std::endl;
     std::cout << " ratio * float" << thirdRatio * 2.5 << std::endl;
     std::cout << "bonne reponse = " << thirdRatio * secondRatio << std::endl;
-    std::cout << "partie entiere =" << Ratio<int>::partEntiere(thirdRatio) << std::endl;
+    std::cout << "partie entiere ratio =" << Ratio<int>::partEntiere(thirdRatio) << std::endl;
+    std::cout << "partie entiere float = " <<Ratio<float>::partEntiere(46.50)<<std::endl;
 
 
     //std::cout <<" float + ratio : " << 2.5 + firstRatio << std::endl;

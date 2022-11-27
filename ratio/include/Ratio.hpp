@@ -145,6 +145,8 @@ class Ratio{
 
 		static Ratio partEntiere(const Ratio &r);
 
+		static float partEntiere(const float &x);
+
 		static Ratio convertFloatToRatio(const float &x, unsigned int nbIter);
 
 		static float convertRatioToFloat(const Ratio &r);
@@ -359,6 +361,26 @@ Ratio<T> Ratio<T>::partEntiere(const Ratio &r){
 
 }
 template <typename T>
+float Ratio<T>::partEntiere(const float &x){
+	int iterator = 0;
+	float error=2.0;
+	if(x<1){
+		return 0;
+	}
+	if(x==1){
+		return 1;
+	}
+	while(error>1){
+		iterator++;
+		error = x - iterator;
+		
+	}
+	return iterator;
+
+}
+
+
+template <typename T>
 void Ratio<T>::reduce(){
 	if(this->m_num < 0 && this->m_den < 0)
 	{
@@ -412,7 +434,7 @@ Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
 
 	if(x >= 1)
 	{
-		double q = floor(x);
+		double q = partEntiere(x);
 		return (Ratio<T>(q,1) + convertFloatToRatio(x - q, nbIter - 1));
 	}
 	return Ratio<T>(0,1);
