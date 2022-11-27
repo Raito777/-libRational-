@@ -11,7 +11,7 @@ int main() {
 
     Ratio<int> secondRatio(5,2);
 
-    Ratio<int> thirdRatio(8,3);
+    Ratio<int> thirdRatio(62,9);
 
     Ratio<int> fourthRatio(15,-3);
 
@@ -21,13 +21,11 @@ int main() {
 
     Ratio<int> seventhRatio(5,2);
 
-    std::cout << "firstRatio : " << firstRatio << std::endl;
-    std::cout << "secondRatio : " << secondRatio << std::endl;
-    std::cout << "thirdRatio : " << thirdRatio << std::endl;
-    std::cout << "fourthRatio : " << fourthRatio << std::endl;
-
+    // std::cout << "firstRatio : " << firstRatio << std::endl;
+    // std::cout << "secondRatio : " << secondRatio << std::endl;
+    // std::cout << "thirdRatio : " << thirdRatio << std::endl;
+    // std::cout << "fourthRatio : " << fourthRatio << std::endl;
     //std::cout <<" /0 : " << sixthRatio*seventhRatio << std::endl;
-
     // std::cout << "first ratio * secondRatio : " << firstRatio * secondRatio << std::endl;
     // std::cout << "first ratio / secondRatio : " << firstRatio / secondRatio << std::endl;
     // //std::cout << "sqrt(secondRatio) : " << Ratio<int>::sqrt(secondRatio) << std::endl;
@@ -46,9 +44,10 @@ int main() {
     std::cout <<" ratio + float  toi tes juste: " << thirdRatio + seventhRatio << std::endl;
 
     std::cout << "convertion ratio to float : " << Ratio<int>::convertRatioToFloat(thirdRatio);
-    std::cout << Ratio<int>::convertFloatToRatio(0.125658,10)<<std::endl;
+   // std::cout << Ratio<int>::convertFloatToRatio(0.125658,10)<<std::endl;
     std::cout << " ratio * float" << thirdRatio * 2.5 << std::endl;
     std::cout << "bonne reponse = " << thirdRatio * secondRatio << std::endl;
+    std::cout << "partie entiere =" << Ratio<int>::partEntiere(thirdRatio) << std::endl;
 
 
     //std::cout <<" float + ratio : " << 2.5 + firstRatio << std::endl;

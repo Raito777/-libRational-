@@ -72,6 +72,9 @@ class Ratio{
 		/// \brief operator soustraction for rational numbers
 		/// \param r the rational number to substract
 		Ratio operator-(const Ratio &r) const;
+		///\brief operator soustraction for rational numbers minus float/int
+		/// \param r the float number to be added
+		Ratio operator-(const float &value) const;
 		/// \brief operator unary minus operator
 		Ratio operator-() const;
 		/// \brief operator multiply for rational numbers
@@ -140,6 +143,8 @@ class Ratio{
 		void reduce();
 		static Ratio reduce(const Ratio &r);
 
+		static Ratio partEntiere(const Ratio &r);
+
 		static Ratio convertFloatToRatio(const float &x, unsigned int nbIter);
 
 		static float convertRatioToFloat(const Ratio &r);
@@ -161,6 +166,13 @@ template <typename T>
 Ratio<T> Ratio<T>::operator-(const Ratio<T> &r) const {
 	return Ratio<T>(this->m_num * r.m_den - this->m_den * r.m_num, this->m_den * r.m_den);
 }
+
+template <typename T>
+Ratio<T> Ratio<T>::operator-(const float &value) const {
+	Ratio<T> r = convertFloatToRatio(value,4);
+	return Ratio<T>(this->m_num * r.m_den - this->m_den * r.m_num, this->m_den * r.m_den);
+}
+
 template <typename T>
 Ratio<T> Ratio<T>::operator-() const{
 	return Ratio<T>(-m_num,m_den);
@@ -328,7 +340,24 @@ Ratio<T> Ratio<T>::sqrt(const Ratio<T> &r){
 //----------------------------------------------------------------------------------------//
 
 //------------------------------FONCTIONS--------------------------------------//
+template <typename T>
+Ratio<T> Ratio<T>::partEntiere(const Ratio &r){
+	int iterator = 0;
+	Ratio<T> error(2,1);
+	if(r<1){
+		return Ratio<T>(0,1);
+	}
+	if(r==1){
+		return Ratio<T>(1,1);
+	}
+	while(error>1){
+		iterator++;
+		error = r - iterator;
+		
+	}
+	return Ratio<T>(iterator,1);
 
+}
 template <typename T>
 void Ratio<T>::reduce(){
 	if(this->m_num < 0 && this->m_den < 0)
