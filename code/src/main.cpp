@@ -9,7 +9,7 @@ int main() {
     
     Ratio<int> firstRatio(-2,-4);
 
-    Ratio<int> secondRatio(-5,2);
+    Ratio<int> secondRatio(5,2);
 
     Ratio<int> thirdRatio(8,3);
 
@@ -47,6 +47,8 @@ int main() {
 
     std::cout << "convertion ratio to float : " << Ratio<int>::convertRatioToFloat(thirdRatio);
     std::cout << Ratio<int>::convertFloatToRatio(0.125658,10)<<std::endl;
+    std::cout << " ratio * float" << thirdRatio * 2.5 << std::endl;
+    std::cout << "bonne reponse = " << thirdRatio * secondRatio << std::endl;
 
 
     //std::cout <<" float + ratio : " << 2.5 + firstRatio << std::endl;

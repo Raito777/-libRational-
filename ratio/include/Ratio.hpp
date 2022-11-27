@@ -77,6 +77,9 @@ class Ratio{
 		/// \brief operator multiply for rational numbers
 		/// \param r the rational number to multiply
 		Ratio operator*(const Ratio &r) const;
+		/// \brief operator multiply for rational numbers multiply float/int
+		/// \param value the float number to multiply 
+		Ratio operator*(const float &value) const;
 		/// \brief operator divide for rational numbers
 		/// \param r the rational number to divide
 		Ratio operator/(const Ratio &r) const;
@@ -170,6 +173,14 @@ Ratio<T> Ratio<T>::operator*(const Ratio<T> &r) const {
         throw std::overflow_error("You can't divide by zero ! You're so CRAZY ");
     }
 	return Ratio<T>(this->m_num* r.m_num, this->m_den*r.m_den);
+}
+
+template <typename T>
+Ratio<T> Ratio<T>::operator*(const float &value) const {
+	Ratio<T> r = convertFloatToRatio(value,4);
+	std::cout << "le ratio de value est :" << convertFloatToRatio(value,4) << std::endl;
+	return Ratio<T>(this->m_num* r.m_num, this->m_den*r.m_den);
+
 }
 
 
