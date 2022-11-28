@@ -82,7 +82,12 @@ class Ratio{
 		Ratio operator*(const Ratio &r) const;
 		/// \brief operator multiply for rational numbers multiply float/int
 		/// \param value the float number to multiply 
-		Ratio operator*(const float &value) const;
+		//Ratio operator*(const float &value) const;
+		template<typename U>
+		inline friend Ratio operator*(const U &value, const Ratio &r) {return r*convertFloatToRatio(value,4);}
+		template<typename U>
+		inline friend Ratio operator*(const Ratio &r, const U &value) {return r*convertFloatToRatio(value,4);}
+
 		/// \brief operator divide for rational numbers
 		/// \param r the rational number to divide
 		Ratio operator/(const Ratio &r) const;
@@ -143,9 +148,9 @@ class Ratio{
 		void reduce();
 		static Ratio reduce(const Ratio &r);
 
-		static Ratio partEntiere(const Ratio &r);
+		static int intPart(const Ratio &r);
 
-		static float partEntiere(const float &x);
+		static int intPart(const float &x);
 
 		static Ratio convertFloatToRatio(const float &x, unsigned int nbIter);
 
@@ -189,13 +194,15 @@ Ratio<T> Ratio<T>::operator*(const Ratio<T> &r) const {
 	return Ratio<T>(this->m_num* r.m_num, this->m_den*r.m_den);
 }
 
-template <typename T>
-Ratio<T> Ratio<T>::operator*(const float &value) const {
-	Ratio<T> r = convertFloatToRatio(value,4);
-	std::cout << "le ratio de value est :" << convertFloatToRatio(value,4) << std::endl;
-	return Ratio<T>(this->m_num* r.m_num, this->m_den*r.m_den);
 
-}
+// template <typename T>
+// Ratio<T> Ratio<T>::operator*(const float &value) const {
+// 	Ratio<T> r = convertFloatToRatio(value,4);
+// 	std::cout << "le ratio de value est :" << convertFloatToRatio(value,4) << std::endl;
+// 	return Ratio<T>(this->m_num* r.m_num, this->m_den*r.m_den);
+// }
+
+
 
 
 template <typename T>
@@ -343,25 +350,25 @@ Ratio<T> Ratio<T>::sqrt(const Ratio<T> &r){
 
 //------------------------------FONCTIONS--------------------------------------//
 template <typename T>
-Ratio<T> Ratio<T>::partEntiere(const Ratio &r){
+int Ratio<T>::intPart(const Ratio &r){
 	int iterator = 0;
 	Ratio<T> error(2,1);
 	if(r<1){
-		return Ratio<T>(0,1);
+		return 0;
 	}
 	if(r==1){
-		return Ratio<T>(1,1);
+		return 1;
 	}
 	while(error>1){
 		iterator++;
 		error = r - iterator;
 		
 	}
-	return Ratio<T>(iterator,1);
+	return iterator;
 
 }
 template <typename T>
-float Ratio<T>::partEntiere(const float &x){
+int Ratio<T>::intPart(const float &x){
 	int iterator = 0;
 	float error=2.0;
 	if(x<1){
@@ -378,7 +385,6 @@ float Ratio<T>::partEntiere(const float &x){
 	return iterator;
 
 }
-
 
 template <typename T>
 void Ratio<T>::reduce(){
@@ -429,12 +435,11 @@ Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
 	if(x < 1)
 	{
 		return invert(convertFloatToRatio(1/x, nbIter));
-		
 	}
 
 	if(x >= 1)
 	{
-		double q = partEntiere(x);
+		double q = intPart(x);
 		return (Ratio<T>(q,1) + convertFloatToRatio(x - q, nbIter - 1));
 	}
 	return Ratio<T>(0,1);
