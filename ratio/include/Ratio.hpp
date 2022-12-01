@@ -80,9 +80,8 @@ class Ratio{
 		/// \brief operator multiply for rational numbers
 		/// \param r the rational number to multiply
 		Ratio operator*(const Ratio &r) const;
-		/// \brief operator multiply for rational numbers multiply float/int
+		/// \brief operator multiply for rational numbers, multiply rational with value
 		/// \param value the float number to multiply 
-		//Ratio operator*(const float &value) const;
 		template<typename U>
 		inline friend Ratio operator*(const U &value, const Ratio &r) {return r*convertFloatToRatio(value,4);}
 		template<typename U>
@@ -91,6 +90,11 @@ class Ratio{
 		/// \brief operator divide for rational numbers
 		/// \param r the rational number to divide
 		Ratio operator/(const Ratio &r) const;
+		template<typename U>
+		inline friend Ratio operator/(const Ratio &r, const U &value) {return r/convertFloatToRatio(value,4);}
+		template<typename U>
+		inline friend Ratio operator/(const U &value, const Ratio &r) {return convertFloatToRatio(value,4)/r;}
+
 
 		/// \brief operator < for rational numbers
 		/// \param r the rational number to compare
