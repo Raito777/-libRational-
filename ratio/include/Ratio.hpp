@@ -63,6 +63,7 @@ class Ratio{
 		/// \brief setter of the denominator
 		inline const T & denominator() const {return m_den;};
 
+
 		/// \brief operator addition for rational numbers
 		/// \param r the rational number to be added
 		Ratio operator+(const Ratio &r) const;
@@ -140,6 +141,10 @@ class Ratio{
 		/// \brief operator sqrt for rational numbers
 		/// \param r the rational number to use
 		static Ratio sqrt(const Ratio &r);
+		/// \brief sign for rational numbers
+		/// \param r the rational number to use
+		static float sign(const T &x);
+
 
 		static Ratio invert(const Ratio &r);
 
@@ -346,6 +351,20 @@ Ratio<T> Ratio<T>::sqrt(const Ratio<T> &r){
 	return Ratio<T>(std::sqrt(r.m_num),std::sqrt(r.m_den));
 }
 
+		
+template <typename T>
+float Ratio<T>::sign(const T &x)
+{
+    if(x>=0){
+		return 1;
+	}
+
+	else{
+		return -1;
+	}
+
+}
+
 //----------------------------------------------------------------------------------------//
 
 //------------------------------FONCTIONS--------------------------------------//
@@ -420,10 +439,9 @@ Ratio<T> Ratio<T>::reduce(const Ratio<T> & r){
 
 template <typename T>
 Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
-
-
+	
 	if(x == 0)
-	{
+	{	
 		return Ratio<T>(0,1);
 	}
 
@@ -432,15 +450,23 @@ Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
 		return Ratio<T>(0,1);
 	}
 
-	if(x < 1)
+	if( x < 0)
 	{
-		return invert(convertFloatToRatio(1/x, nbIter));
+		return -convertFloatToRatio(-x,nbIter);
+	}
+
+
+	if(x < 1)
+	{	
+		
+		return invert(convertFloatToRatio(1/std::abs(x), nbIter));
 	}
 
 	if(x >= 1)
 	{
 		double q = intPart(x);
 		return (Ratio<T>(q,1) + convertFloatToRatio(x - q, nbIter - 1));
+		
 	}
 	return Ratio<T>(0,1);
 }

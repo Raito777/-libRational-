@@ -37,24 +37,25 @@ int main() {
     // std::cout << Ratio<int>::abs(firstRatio) << std::endl;
     // std::cout << Ratio<int>::pow(firstRatio,2) <<std::endl;
 
-    std::cout <<"Convertion float to ratio: " << Ratio<int>::convertFloatToRatio(2.5,4) << std::endl;
-    std::cout <<" ratio + float : " << thirdRatio + 2.5 << std::endl;
-    float b = 2.5;
-    std::cout << " si tu es un float tape dans tes mains :" << thirdRatio + b <<std::endl;
-    std::cout <<" ratio + float  toi tes juste: " << thirdRatio + seventhRatio << std::endl;
+    std::cout <<"négatif !!!: " << Ratio<int>::convertFloatToRatio(-0.125,4) << std::endl;
+    std::cout <<"positif: " << Ratio<int>::convertFloatToRatio(0.125,4) << std::endl;
+//     std::cout <<" ratio + float : " << thirdRatio + 2.5 << std::endl;
+//     float b = 2.5;
+//     std::cout << " si tu es un float tape dans tes mains :" << thirdRatio + b <<std::endl;
+//     std::cout <<" ratio + float  toi tes juste: " << thirdRatio + seventhRatio << std::endl;
 
-    std::cout << "convertion ratio to float : " << Ratio<int>::convertRatioToFloat(thirdRatio);
-   // std::cout << Ratio<int>::convertFloatToRatio(0.125658,10)<<std::endl;
-    std::cout << " ratio * float" << thirdRatio * 2.5 << std::endl;
-    std::cout << "bonne reponse = " << thirdRatio * secondRatio << std::endl;
-    std::cout << "partie entiere ratio =" << Ratio<int>::intPart(thirdRatio) << std::endl;
-    std::cout << "partie entiere float = " <<Ratio<float>::intPart(46.50)<<std::endl;
+//     std::cout << "convertion ratio to float : " << Ratio<int>::convertRatioToFloat(thirdRatio);
+//    // std::cout << Ratio<int>::convertFloatToRatio(0.125658,10)<<std::endl;
+//     std::cout << " ratio * float" << thirdRatio * 2.5 << std::endl;
+//     std::cout << "bonne reponse = " << thirdRatio * secondRatio << std::endl;
+//     std::cout << "partie entiere ratio =" << Ratio<int>::intPart(thirdRatio) << std::endl;
+//     std::cout << "partie entiere float = " <<Ratio<float>::intPart(46.50)<<std::endl;
 
-    std::cout << "moins unaire " << -thirdRatio << std::endl;
+//     std::cout << "moins unaire " << -thirdRatio << std::endl;
 
-    std::cout << "ratio * float " << secondRatio * 0.7 << std::endl;
-    std::cout << "float * ratio " << 0.2 * secondRatio << std::endl;
-    //std::cout <<" float + ratio : " << 2.5 + firstRatio << std::endl;
+//     std::cout << "ratio * float " << secondRatio * 0.7 << std::endl;
+//     std::cout << "float * ratio " << 0.2 * secondRatio << std::endl;
+//     //std::cout <<" float + ratio : " << 2.5 + firstRatio << std::endl;
    
     
     
