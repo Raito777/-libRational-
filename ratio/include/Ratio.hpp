@@ -40,7 +40,7 @@ class Ratio{
 
 	public :
 		// default constructor
-		Ratio() = default;
+		Ratio() : m_num(0), m_den(1) {};
 
 		/// \brief constructor from a numerator and denominator
 		/// \param numerator : the numerator of the rational number
@@ -54,7 +54,7 @@ class Ratio{
 		/// \brief destructor
 		~Ratio() = default;
 
-		/// \brief getter of the numerator
+		// /// \brief getter of the numerator
 		inline T & numerator() {return m_num;};
 		/// \brief getter of the denominator
 		inline T & denominator() {return m_den;};
@@ -412,6 +412,11 @@ Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
 	if(nbIter == 0)
 	{
 		return Ratio<T>(0,1);
+	}
+
+	if( x < 0)
+	{
+		return -convertFloatToRatio(-x,nbIter);
 	}
 
 	if(x < 1)
