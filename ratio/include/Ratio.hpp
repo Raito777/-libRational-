@@ -66,6 +66,11 @@ class Ratio{
 		/// \brief operator addition for rational numbers
 		/// \param r the rational number to be added
 		Ratio operator+(const Ratio &r) const;
+		template<typename U>
+		inline friend Ratio operator+(const Ratio &r, const U &value) {return r+convertFloatToRatio(value,4);}
+		template<typename U>
+		inline friend Ratio operator+(const U &value, const Ratio &r) {return r+convertFloatToRatio(value,4);}
+
 		///\brief operator addition for rational numbers plus float/int
 		/// \param r the float number to be added
 		Ratio operator+(const float &value) const;
