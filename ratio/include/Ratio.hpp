@@ -35,8 +35,8 @@ template <typename T>
 class Ratio{
 
 	private : 
-		T m_num;
-		T m_den;
+		int m_num;
+		int m_den;
 
 	public :
 		// default constructor
@@ -87,6 +87,7 @@ class Ratio{
 	
 		/// \brief operator unary minus operator
 		Ratio operator-() const;
+
 		/// \brief operator multiply for rational numbers
 		/// \param r the rational number to multiply
 		Ratio operator*(const Ratio &r) const;
@@ -166,9 +167,12 @@ class Ratio{
 		/// \brief operator exp for rational numbers
 		/// \param r the rational number to use
 		static Ratio exp(const Ratio &r);
-		/// \brief operator log for rational numbers
+		/// \brief operator ln for rational numbers
 		/// \param r the rational number to use
-		static Ratio log(const Ratio &r);
+		static Ratio ln(const Ratio &r);
+			/// \brief operator log10 for rational numbers
+		/// \param r the rational number to use
+		static Ratio log10(const Ratio &r);
 		/// \brief operator abs for rational numbers
 		/// \param r the rational number to use
 		static Ratio abs(const Ratio &r);
@@ -194,6 +198,8 @@ class Ratio{
 
 		static float convertRatioToFloat(const Ratio &r);
 };
+
+
 //------------------------------ARITHMETICS OPERATORS--------------------------------------//
 template <typename T>
 Ratio<T> Ratio<T>::operator+(const Ratio<T> &r) const {
@@ -271,28 +277,33 @@ std::ostream& operator<<(std::ostream& stream, const Ratio<T> &r){
 //------------------------------ARITHMETIC+ OPERATORS--------------------------------------//
 template <typename T>
 Ratio<T> Ratio<T>::sin(const Ratio<T> & r){
-	return Ratio<T>(std::sin(r.m_num/r.m_den),1);
+	return convertFloatToRatio(std::sin(convertRatioToFloat(r)),4);
 }
 
 template <typename T>
 Ratio<T> Ratio<T>::cos(const Ratio<T> & r){
-	return Ratio<T>(std::cos(r.m_num/r.m_den),1);
+	return convertFloatToRatio(std::cos(convertRatioToFloat(r)),4);
 }
 
 template <typename T>
 Ratio<T> Ratio<T>::tan(const Ratio<T> & r){
-	return Ratio<T>(std::tan(r.m_num/r.m_den),1);
+	return convertFloatToRatio(std::tan(convertRatioToFloat(r)),4);
 }
 
 template <typename T>
 Ratio<T> Ratio<T>::exp(const Ratio<T> & r){
-	return Ratio<T>(std::exp(r.m_num/r.m_den),1);
+	return convertFloatToRatio(std::exp(convertRatioToFloat(r)),4);
 }
 
 template <typename T>
-Ratio<T> Ratio<T>::log(const Ratio<T> & r){
-	return Ratio<T>(std::log(r.m_num)-std::log(r.m_den),1);
+Ratio<T> Ratio<T>::ln(const Ratio<T> & r){
+	return convertFloatToRatio(std::log(r.m_num) - std::log(r.m_den), 4);
 }
+template <typename T>
+Ratio<T> Ratio<T>::log10(const Ratio<T> & r){
+	return convertFloatToRatio(std::log10(r.m_num) - std::log10(r.m_den), 4);
+}
+
 
 template <typename T>
 Ratio<T> Ratio<T>::abs(const Ratio<T> & r){
@@ -380,7 +391,10 @@ void Ratio<T>::reduce(){
 		this->m_num *= -1;
 		this->m_den *= -1;
 	}
-	T theGcd = std::gcd(this->m_num, this->m_den);
+
+	int theGcd = std::gcd(this->m_num, this->m_den);
+
+
 	this->m_num = this->m_num / theGcd;
 	this->m_den = this->m_den / theGcd;
 
