@@ -5,9 +5,12 @@
 
 int main() {
     
-    Ratio<int> firstRatio(5,2);
+    Ratio<int> firstRatio(8,12);
 
     Ratio<int> secondRatio(7417,12395);
+
+    Ratio<float> thirdRatio(0.6666666666666666);
+
 
     // if(firstRatio != firstRatio ){
     //     std::cout << "Ratio != ratio " << std::endl;
@@ -31,6 +34,8 @@ int main() {
     std::cout << Ratio<int>::exp(firstRatio) << std::endl;
     std::cout << Ratio<int>::ln(firstRatio) << std::endl;
     std::cout << Ratio<int>::log10(firstRatio) << std::endl;
+    std::cout << thirdRatio << std::endl;
+
 
     return 0;
 }

@@ -4,7 +4,7 @@
 #pragma once
 
 #include <iostream>
-#include <numeric>
+#include <algorithm>
 #include <limits>
 #include <fstream>
 #include <cmath>
@@ -47,6 +47,11 @@ class Ratio{
 		/// \param denominator : the denominator of the rational number
 		Ratio(const T& numerator, const T &denominator) : m_num(numerator), m_den(denominator) {this->reduce();};
 
+
+		/// \brief constructor from a value number, convert it into a rational number
+		/// \param ratio the other rational number
+		Ratio(const T& value);
+
 		/// \brief constructor from another rational number
 		/// \param ratio the other rational number
 		Ratio(const Ratio &ratio) = default;
@@ -55,13 +60,13 @@ class Ratio{
 		~Ratio() = default;
 
 		// /// \brief getter of the numerator
-		inline T & numerator() {return m_num;};
+		inline T getNumerator() const {return m_num;};
 		/// \brief getter of the denominator
-		inline T & denominator() {return m_den;};
+		inline T getDenominator() const {return m_den;};
 		/// \brief setter of the numerator
-		inline const T & numerator() const {return m_num;};
+		void setNumerator(const T numerator) {this->m_num = numerator;};
 		/// \brief setter of the denominator
-		inline const T & denominator() const {return m_den;};
+		void setDenominator(const T denominator) {this->m_den = denominator;};
 
 		/// \brief operator addition for rational numbers
 		/// \param r the rational number to be added
@@ -198,8 +203,12 @@ class Ratio{
 
 		static float convertRatioToFloat(const Ratio &r);
 };
-
-
+template <typename T>
+Ratio<T>::Ratio(const T& value){
+	const Ratio<T> r(convertFloatToRatio(value,4));
+	this->m_num = r.getNumerator();
+	this->m_den = r.getDenominator();
+}
 //------------------------------ARITHMETICS OPERATORS--------------------------------------//
 template <typename T>
 Ratio<T> Ratio<T>::operator+(const Ratio<T> &r) const {
@@ -392,7 +401,7 @@ void Ratio<T>::reduce(){
 		this->m_den *= -1;
 	}
 
-	int theGcd = std::gcd(this->m_num, this->m_den);
+	int theGcd = std::__gcd(this->m_num, this->m_den);
 
 
 	this->m_num = this->m_num / theGcd;
@@ -403,7 +412,7 @@ void Ratio<T>::reduce(){
 template <typename T>
 Ratio<T> Ratio<T>::reduce(const Ratio<T> & r){
 
-	T theGcd = std::gcd(r.m_num, r.m_den);
+	T theGcd = std::__gcd(r.m_num, r.m_den);
 	if(theGcd == 1){
 		return Ratio<T>(r.m_num,r.m_den);
 	}
