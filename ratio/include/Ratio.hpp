@@ -70,102 +70,67 @@ class Ratio{
 
 		/// \brief operator addition for rational numbers
 		/// \param r the rational number to be added
-		///\brief operator addition for rational numbers plus float/int
-		/// \param r the float number to be added
-		Ratio operator+(const Ratio &r) const;
 		template<typename U>
-		inline friend Ratio operator+(const Ratio &r, const U &value) {return r+convertFloatToRatio(value,4);}
+		Ratio<T> operator+(const Ratio<U> &r){
+			return Ratio<T>(this->m_num * r.getDenominator() + this->m_den * r.getNumerator(), this->m_den * r.getDenominator());
+		}
 		template<typename U>
-		inline friend Ratio operator+(const U &value, const Ratio &r) {return r+convertFloatToRatio(value,4);}
+		Ratio<T> operator+(const U &value) const {
+			return Ratio<T>(this->m_num + this->m_den * value, this->m_den);
+		}
 
+		template<typename U>
+		friend Ratio<T> operator+(const U &value, const Ratio<T> &r){
+			return Ratio<T>(r.getNumerator()  + r.getDenominator() * value, r.getNumerator());
+		}
 
 		/// \brief operator soustraction for rational numbers
 		/// \param r the rational number to substract
-		Ratio operator-(const Ratio &r) const;
-		///\brief operator soustraction for rational numbers minus float/int
-		/// \param r the float number to be added
 		template<typename U>
-		inline friend Ratio operator-(const Ratio &r, const U &value) {return r-convertFloatToRatio(value,4);}
+		Ratio<T> operator-(const Ratio<U> &r){
+			return Ratio<T>(this->m_num * r.getDenominator() - this->m_den * r.getNumerator(), this->m_den * r.getDenominator());
+		}
 		template<typename U>
-		inline friend Ratio operator-(const U &value, const Ratio &r) {return convertFloatToRatio(value,4)-r;}
-
+		Ratio<T> operator-(const U &value) const {
+			return Ratio<T>(this->m_num - this->m_den * value, this->m_den);
+		}
+		template<typename U>
+		friend Ratio<T> operator-(const U &value, const Ratio<T> &r){
+			return Ratio<T>(r.getDenominator() * value - r.getNumerator(), r.getDenominator());
+		}
 	
 		/// \brief operator unary minus operator
 		Ratio operator-() const;
 
 		/// \brief operator multiply for rational numbers
 		/// \param r the rational number to multiply
-		
-
 		template<typename U>
 		Ratio<T> operator*(const Ratio<U> &r) {
 			return Ratio<T>(this->m_num * r.getNumerator(), this->m_den * r.getDenominator());
 		}
-
-
 		template<typename U>
 		Ratio operator*(const U &value) const {
 			return Ratio<T>(value*this->m_num, this->m_den);
 		}
-
-		template<typename V>
-		friend Ratio<T> operator*(const V &value, const Ratio<T> &r){
+		template<typename U>
+		friend Ratio<T> operator*(const U &value, const Ratio<T> &r){
 			return Ratio<T>(value * r.getNumerator(), r.getDenominator());
 		}
 
-
-
 		/// \brief operator divide for rational numbers
 		/// \param r the rational number to divide
-		Ratio operator/(const Ratio &r) const;
 		template<typename U>
-		inline friend Ratio operator/(const Ratio &r, const U &value) {return r/convertFloatToRatio(value,4);}
+		Ratio<T> operator/(const Ratio<U> &r) {
+			return Ratio<T>(this->m_num * r.getDenominator(), r.getNumerator() * this->m_den);
+		}
 		template<typename U>
-		inline friend Ratio operator/(const U &value, const Ratio &r) {return convertFloatToRatio(value,4)/r;}
-
-
-		/// \brief operator < for rational numbers
-		/// \param r the rational number to compare
-		bool operator<(const Ratio &r) const;
+		Ratio operator/(const U &value) const {
+			return Ratio<T>(this->m_num, this->m_den * value);
+		}
 		template<typename U>
-		inline friend bool operator<(const Ratio &r, const U &value) {return r < convertFloatToRatio(value,4);}
-		template<typename U>
-		inline friend bool operator<(const U &value, const Ratio &r) {return convertFloatToRatio(value,4) < r;}
-	
-		bool operator<=(const Ratio &r) const;
-		template<typename U>
-		inline friend bool operator<=(const Ratio &r, const U &value) {return r <= convertFloatToRatio(value,4);}
-		template<typename U>
-		inline friend bool operator<=(const U &value, const Ratio &r) {return convertFloatToRatio(value,4) <= r;}
-
-		bool operator>(const Ratio &r) const;
-		template<typename U>
-		inline friend bool operator>(const Ratio &r, const U &value) {return r > convertFloatToRatio(value,4);}
-		template<typename U>
-		inline friend bool operator>(const U &value, const Ratio &r) {return convertFloatToRatio(value,4) > r;}
-
-
-		bool operator>=(const Ratio &r) const;
-		template<typename U>
-		inline friend bool operator>=(const Ratio &r, const U &value) {return r >= convertFloatToRatio(value,4);}
-		template<typename U>
-		inline friend bool operator>=(const U &value, const Ratio &r) {return convertFloatToRatio(value,4) >= r;}
-
-
-		bool operator==(const Ratio &r) const;
-		template<typename U>
-		inline friend bool operator==(const Ratio &r, const U &value) {return r == convertFloatToRatio(value,4);}
-		template<typename U>
-		inline friend bool operator==(const U &value, const Ratio &r) {return convertFloatToRatio(value,4) == r;}
-
-		bool operator!=(const Ratio &r) const;
-		template<typename U>
-		inline friend bool operator!=(const Ratio &r, const U &value) {return r != convertFloatToRatio(value,4);}
-		template<typename U>
-		inline friend bool operator!=(const U &value, const Ratio &r) {return convertFloatToRatio(value,4) != r;}
-		//inline friend Ratio operator*(const T &value, const Ratio &r) {return r*value;};
-		//inline friend Ratio operator/(const T &value, const Ratio &r) {return Ratio(value)/r;};
-		//inline friend Ratio operator-(const Ratio &r) {return Ratio(-r.m_num,-r.m_den);}; // unary minus
+		friend Ratio<T> operator/(const U &value, const Ratio<T> &r){
+			return Ratio<T>(value * r.getDenominator(), r.getNumerator());
+		}
 
 		/// \brief operator print for rational numbers
 		/// \param r the rational number to print
@@ -202,8 +167,6 @@ class Ratio{
 
 		static Ratio invert(const Ratio &r);
 
-		//static float invert(const float &x);
-
 		void reduce();
 		static Ratio reduce(const Ratio &r);
 
@@ -211,7 +174,7 @@ class Ratio{
 
 		static int intPart(const float &x);
 
-		static Ratio convertFloatToRatio(const float &x, unsigned int nbIter);
+		static Ratio convertFloatToRatio(const double &x, unsigned int nbIter);
 
 		static float convertRatioToFloat(const Ratio &r);
 };
@@ -223,81 +186,107 @@ Ratio<T>::Ratio(const T& value){
 	this->m_den = r.getDenominator();
 }
 //------------------------------ARITHMETICS OPERATORS--------------------------------------//
-template <typename T>
-Ratio<T> Ratio<T>::operator+(const Ratio<T> &r) const {
-	return Ratio<T>(this->m_num * r.m_den + this->m_den * r.m_num, this->m_den * r.m_den);
-}
-
-template <typename T>
-Ratio<T> Ratio<T>::operator-(const Ratio<T> &r) const {
-	return Ratio<T>(this->m_num * r.m_den - this->m_den * r.m_num, this->m_den * r.m_den);
-}
 
 template <typename T>
 Ratio<T> Ratio<T>::operator-() const{
 	return Ratio<T>(-m_num,m_den);
 }
 
-
-// template <typename T>
-// template <typename U>
-// Ratio<T> Ratio<T>::operator*(const Ratio<U> &r) const {
-// 	return Ratio<T>(this->m_num* r.getNumerator(), this->m_den*r.getDenominator());
-// }
-
-// template <typename T>
-// template <typename U>
-// Ratio<T> Ratio<T>::operator*(const U &value) const {
-// 	return Ratio<T>(value*this->m_num, this->m_den);
-// }
-
-// template <typename T, typename U>
-// Ratio<T> operator*(const U &value, const Ratio<T> &r){
-// 	return Ratio<T>(value * r.getNumerator(), r.getDenominator());
-// }
-
-
-
-template <typename T>
-Ratio<T> Ratio<T>::operator/(const Ratio<T> &r) const {
-	return Ratio<T>(this->m_num * r.m_den, r.m_num * this->m_den);
-}
 //----------------------------------------------------------------------------------------//
 
 //------------------------------COMPARISON OPERATORS--------------------------------------//
 
-template <typename T>
-bool Ratio<T>::operator<(const Ratio<T> &r) const {
-	return (this->m_num * r.m_den < this->m_den * r.m_num);
+template <typename T, typename U>
+bool operator<(const Ratio<T> &r1, const Ratio<U> &r2){
+	return (r1.getNumerator() * r2.getDenominator() < r1.getDenominator() * r2.getNumerator());
 }
 
-template <typename T>
-bool Ratio<T>::operator<=(const Ratio<T> &r) const {
-	return (this->m_num * r.m_den <= this->m_den * r.m_num);
+template <typename T, typename U>
+bool operator<(const Ratio<T> &r1, const U &value){
+	return (r1 < Ratio<T>::convertFloatToRatio(value, 4));
 }
 
-template <typename T>
-bool Ratio<T>::operator>(const Ratio<T> &r) const {
-	return (this->m_num * r.m_den > this->m_den * r.m_num);
+template <typename T, typename U>
+bool operator<(const U &value, const Ratio<T> &r1){
+	return (Ratio<T>::convertFloatToRatio(value, 4) < r1);
+}
+
+template <typename T, typename U>
+bool operator<=(const Ratio<T> &r1, const Ratio<U> &r2){
+	return (r1.getNumerator() * r2.getDenominator() <= r1.getDenominator() * r2.getNumerator());
+}
+
+template <typename T, typename U>
+bool operator<=(const Ratio<T> &r1, const U &value){
+	return (r1 <= Ratio<T>::convertFloatToRatio(value, 4));
+}
+
+template <typename T, typename U>
+bool operator<=(const U &value, const Ratio<T> &r1){
+	return (Ratio<T>::convertFloatToRatio(value, 4) <= r1);
+}
+
+template <typename T, typename U>
+bool operator>(const Ratio<T> &r1, const Ratio<U> &r2){
+	return (r1.getNumerator() * r2.getDenominator() > r1.getDenominator() * r2.getNumerator());
+}
+
+template <typename T, typename U>
+bool operator>(const Ratio<T> &r1, const U &value){
+	return (r1 > Ratio<T>::convertFloatToRatio(value, 4));
+}
+
+template <typename T, typename U>
+bool operator>(const U &value, const Ratio<T> &r1){
+	return (Ratio<T>::convertFloatToRatio(value, 4) > r1);
 }
 
 
-template <typename T>
-bool Ratio<T>::operator>=(const Ratio<T> &r) const {
-	return (this->m_num * r.m_den >= this->m_den * r.m_num);
+template <typename T, typename U>
+bool operator>=(const Ratio<T> &r1, const Ratio<U> &r2){
+	return (r1.getNumerator() * r2.getDenominator() >= r1.getDenominator() * r2.getNumerator());
 }
 
-
-
-template <typename T>
-bool Ratio<T>::operator==(const Ratio<T> &r) const {
-	return (this->m_num * r.m_den == this->m_den * r.m_num);
+template <typename T, typename U>
+bool operator>=(const Ratio<T> &r1, const U &value){
+	return (r1 >= Ratio<T>::convertFloatToRatio(value, 4));
 }
 
-template <typename T>
-bool Ratio<T>::operator!=(const Ratio<T> &r) const {
-	return (this->m_num * r.m_den != this->m_den * r.m_num);
+template <typename T, typename U>
+bool operator>=(const U &value, const Ratio<T> &r1){
+	return (Ratio<T>::convertFloatToRatio(value, 4) >= r1);
 }
+
+template <typename T, typename U>
+bool operator==(const Ratio<T> &r1, const Ratio<U> &r2){
+	return (r1.getNumerator() * r2.getDenominator() == r1.getDenominator() * r2.getNumerator());
+}
+
+template <typename T, typename U>
+bool operator==(const Ratio<T> &r1, const U &value){
+	return (r1 == Ratio<T>::convertFloatToRatio(value, 4));
+}
+
+template <typename T, typename U>
+bool operator==(const U &value, const Ratio<T> &r1){
+	return (r1 == Ratio<T>::convertFloatToRatio(value, 4));
+}
+
+template <typename T, typename U>
+bool operator!=(const Ratio<T> &r1, const Ratio<U> &r2){
+	return (r1.getNumerator() * r2.getDenominator() != r1.getDenominator() * r2.getNumerator());
+}
+
+template <typename T, typename U>
+bool operator!=(const Ratio<T> &r1, const U &value){
+	return (r1 != Ratio<T>::convertFloatToRatio(value, 4));
+}
+
+template <typename T, typename U>
+bool operator!=(const U &value, const Ratio<T> &r1){
+	return (r1 != Ratio<T>::convertFloatToRatio(value, 4));
+}
+
 //----------------------------------------------------------------------------------------//
 
 
@@ -448,7 +437,7 @@ void Ratio<T>::reduce(){
 		this->m_num = this->m_num / a;
 		this->m_den = this->m_den / a;
 	}
-	
+
 	if(this->m_num < 0 && this->m_den < 0)
 	{
 		this->m_num *= -1;
@@ -463,7 +452,7 @@ void Ratio<T>::reduce(){
 }
 
 template <typename T>
-Ratio<T> Ratio<T>::convertFloatToRatio(const float &x, unsigned int nbIter){
+Ratio<T> Ratio<T>::convertFloatToRatio(const double &x, unsigned int nbIter){
 
 
 	if(x == 0)

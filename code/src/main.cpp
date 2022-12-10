@@ -5,7 +5,7 @@
 
 int main() {
     
-    Ratio<int> firstRatio(8,12);
+    Ratio<int> firstRatio(1,2);
 
     Ratio<long int> secondRatio(7417,12395);
 
@@ -13,15 +13,15 @@ int main() {
 
     Ratio<double> fourthRatio(-2.5,5.5);
 
-    // if(firstRatio != firstRatio ){
-    //     std::cout << "Ratio != ratio " << std::endl;
-    // }
-    // if(firstRatio != 1 ){
-    //     std::cout << "Ratio != 1 " << std::endl;
-    // }
-    // if(1 != firstRatio){
-    //     std::cout << "1 != ratio " << std::endl;
-    // }
+    if(firstRatio < firstRatio){
+        std::cout << "Ratio < ratio " << std::endl;
+    }
+    if(firstRatio < 0.25){
+        std::cout << "Ratio < 0.25 " << std::endl;
+    }
+    if(0.25 < firstRatio){
+        std::cout << "0.25 < ratio " << std::endl;
+    }
 
     // Ratio<int> fifthRatio(6,12);
 
@@ -29,15 +29,15 @@ int main() {
 
     // Ratio<int> seventhRatio(5,2);
 
-    std::cout << Ratio<int>::sin(firstRatio) << std::endl;
-    std::cout << Ratio<int>::cos(firstRatio) << std::endl;
-    std::cout << Ratio<int>::tan(firstRatio) << std::endl;
-    std::cout << Ratio<int>::exp(firstRatio) << std::endl;
-    std::cout << Ratio<int>::ln(firstRatio) << std::endl;
-    std::cout << Ratio<int>::log10(firstRatio) << std::endl;
+    // std::cout << Ratio<int>::sin(firstRatio) << std::endl;
+    // std::cout << Ratio<int>::cos(firstRatio) << std::endl;
+    // std::cout << Ratio<int>::tan(firstRatio) << std::endl;
+    // std::cout << Ratio<int>::exp(firstRatio) << std::endl;
+    // std::cout << Ratio<int>::ln(firstRatio) << std::endl;
+    // std::cout << Ratio<int>::log10(firstRatio) << std::endl;
     
-    std::cout << firstRatio * fourthRatio << std::endl;
-    std::cout << fourthRatio * 2 << std::endl;
-    std::cout << 2 * fourthRatio << std::endl;
+    // std::cout << firstRatio / fourthRatio << std::endl;
+    // std::cout << fourthRatio / 2 << std::endl;
+    // std::cout << 2 / fourthRatio << std::endl;
     return 0;
 }
