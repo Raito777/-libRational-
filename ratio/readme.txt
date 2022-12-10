@@ -1,6 +1,6 @@
 
 # Doc
-the doc directory and more globaly the documentation is completely optional
+The documentation properties directory
 
-# Source code
-In this example, the source code is splited into *include* directory for headers and *src* directory for *cpp* files. This split is optional and you can put everything in the *src* file.
+#Include
+Raito.hpp is the only file needed to use the library ratio
