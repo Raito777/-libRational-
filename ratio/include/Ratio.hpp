@@ -95,13 +95,25 @@ class Ratio{
 
 		/// \brief operator multiply for rational numbers
 		/// \param r the rational number to multiply
-		Ratio operator*(const Ratio &r) const;
-		/// \brief operator multiply for rational numbers, multiply rational with value
-		/// \param value the float number to multiply 
+		
+
 		template<typename U>
-		inline friend Ratio operator*(const U &value, const Ratio &r) {return r*convertFloatToRatio(value,4);}
+		Ratio<T> operator*(const Ratio<U> &r) {
+			return Ratio<T>(this->m_num * r.getNumerator(), this->m_den * r.getDenominator());
+		}
+
+
 		template<typename U>
-		inline friend Ratio operator*(const Ratio &r, const U &value) {return r*convertFloatToRatio(value,4);}
+		Ratio operator*(const U &value) const {
+			return Ratio<T>(value*this->m_num, this->m_den);
+		}
+
+		template<typename V>
+		friend Ratio<T> operator*(const V &value, const Ratio<T> &r){
+			return Ratio<T>(value * r.getNumerator(), r.getDenominator());
+		}
+
+
 
 		/// \brief operator divide for rational numbers
 		/// \param r the rational number to divide
@@ -227,13 +239,24 @@ Ratio<T> Ratio<T>::operator-() const{
 }
 
 
-template <typename T>
-Ratio<T> Ratio<T>::operator*(const Ratio<T> &r) const {
-	if (this->m_den == 0 || r.m_den == 0){
-        throw std::overflow_error("You can't divide by zero ! You're so CRAZY ");
-    }
-	return Ratio<T>(this->m_num* r.m_num, this->m_den*r.m_den);
-}
+// template <typename T>
+// template <typename U>
+// Ratio<T> Ratio<T>::operator*(const Ratio<U> &r) const {
+// 	return Ratio<T>(this->m_num* r.getNumerator(), this->m_den*r.getDenominator());
+// }
+
+// template <typename T>
+// template <typename U>
+// Ratio<T> Ratio<T>::operator*(const U &value) const {
+// 	return Ratio<T>(value*this->m_num, this->m_den);
+// }
+
+// template <typename T, typename U>
+// Ratio<T> operator*(const U &value, const Ratio<T> &r){
+// 	return Ratio<T>(value * r.getNumerator(), r.getDenominator());
+// }
+
+
 
 template <typename T>
 Ratio<T> Ratio<T>::operator/(const Ratio<T> &r) const {
@@ -391,22 +414,14 @@ int Ratio<T>::intPart(const float &x){
 
 template <typename T>
 void Ratio<T>::reduce(){
-	if(this->m_num < 0 && this->m_den < 0)
-	{
-		this->m_num *= -1;
-		this->m_den *= -1;
-	}
-	if(this->m_den < 0 && this->m_num > 0)
-	{	
-		this->m_num *= -1;
-		this->m_den *= -1;
-	}
+
 	//si T est un entier, on utilise gcd()
 	if constexpr (std::is_integral_v<T>){
-	int theGcd = std::__gcd(this->m_num, this->m_den);
+		int theGcd = std::__gcd(this->m_num, this->m_den);
 
-	this->m_num = this->m_num / theGcd;
-	this->m_den = this->m_den / theGcd;
+		this->m_num = this->m_num / theGcd;
+		this->m_den = this->m_den / theGcd;
+
 	} else {
 
 		//si T est un float, on utilise l'algorithme d'Euclide étendu
@@ -429,24 +444,21 @@ void Ratio<T>::reduce(){
 			y_last = y - q * y_last;
 			y = temp;
 		}
-			this->m_num = this->m_num / a;
-			this->m_den = this->m_den / a;
+		
+		this->m_num = this->m_num / a;
+		this->m_den = this->m_den / a;
 	}
-
-
-}
-
-template <typename T>
-Ratio<T> Ratio<T>::reduce(const Ratio<T> & r){
-
-	T theGcd = std::__gcd(r.m_num, r.m_den);
-	if(theGcd == 1){
-		return Ratio<T>(r.m_num,r.m_den);
+	
+	if(this->m_num < 0 && this->m_den < 0)
+	{
+		this->m_num *= -1;
+		this->m_den *= -1;
 	}
-	T newNum = r.m_num / theGcd;
-	T newDen = r.m_den / theGcd;
-
-	return Ratio<T>(newNum, newDen);
+	if(this->m_den < 0 && this->m_num > 0)
+	{	
+		this->m_num *= -1;
+		this->m_den *= -1;
+	}
 
 }
 

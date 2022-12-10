@@ -7,7 +7,7 @@ int main() {
     
     Ratio<int> firstRatio(8,12);
 
-    Ratio<int> secondRatio(7417,12395);
+    Ratio<long int> secondRatio(7417,12395);
 
     Ratio<float> thirdRatio(0.6666666666666666);
 
@@ -35,8 +35,9 @@ int main() {
     std::cout << Ratio<int>::exp(firstRatio) << std::endl;
     std::cout << Ratio<int>::ln(firstRatio) << std::endl;
     std::cout << Ratio<int>::log10(firstRatio) << std::endl;
-    std::cout << thirdRatio << std::endl;
-    std::cout << fourthRatio << std::endl;
-
+    
+    std::cout << firstRatio * fourthRatio << std::endl;
+    std::cout << fourthRatio * 2 << std::endl;
+    std::cout << 2 * fourthRatio << std::endl;
     return 0;
 }
