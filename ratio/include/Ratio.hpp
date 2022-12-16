@@ -412,30 +412,31 @@ void Ratio<T>::reduce(){
 		this->m_den = this->m_den / theGcd;
 
 	} else {
+		throw std::invalid_argument("You can't create a ratio with floating values, numerator and denominator must be integers");
 
 		//si T est un float, on utilise l'algorithme d'Euclide étendu
 		//l'algorithme d'Euclide permet de trouver le plus grand diviseur commun entre
 		//deux nombre à virgule floattante
-		T a  = this->m_num;
-		T b =  this->m_den;
-		T x = 1, y = 0, x_last = 0, y_last = 1, q, temp;
-		while(b != 0){
-			q = std::floor(a/b);
-			temp = std::fmod(a, b); //on utilise fmod pour faire a % b, avec a et b nombres flottants
-			a = b;
-			b = temp;
+		// T a  = this->m_num;
+		// T b =  this->m_den;
+		// T x = 1, y = 0, x_last = 0, y_last = 1, q, temp;
+		// while(b != 0){
+		// 	q = std::floor(a/b);
+		// 	temp = std::fmod(a, b); //on utilise fmod pour faire a % b, avec a et b nombres flottants
+		// 	a = b;
+		// 	b = temp;
 
-			temp = x_last;
-			x_last = x - q * x_last;
-			x = temp;
+		// 	temp = x_last;
+		// 	x_last = x - q * x_last;
+		// 	x = temp;
 
-			temp = y_last;
-			y_last = y - q * y_last;
-			y = temp;
-		}
+		// 	temp = y_last;
+		// 	y_last = y - q * y_last;
+		// 	y = temp;
+		// }
 		
-		this->m_num = this->m_num / a;
-		this->m_den = this->m_den / a;
+		// this->m_num = int(this->m_num / a);
+		// this->m_den = int(this->m_den / a);
 	}
 
 	if(this->m_num < 0 && this->m_den < 0)
