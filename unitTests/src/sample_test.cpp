@@ -21,7 +21,7 @@ TEST (RatioConstructor, NumAndDenConstructor) {
     const size_t maxNb = 10000;
 	std::mt19937 generator(0);
 	std::uniform_int_distribution<int> uniformIntDistribution(1,maxNb);
-	std::uniform_real_distribution<double> uniformDistributionValue(-int(maxNb),maxNb);
+	std::uniform_int_distribution<int> uniformDistributionValue(-int(maxNb),maxNb);
 	auto gen = [&uniformDistributionValue, &generator](){ return uniformDistributionValue(generator);};
 
     for(int run = 0; run < 1000; ++run){
@@ -47,8 +47,8 @@ TEST (RatioConstructor, valueConstructor) {
 
         double value = uniformDistributionValue(generator);
 
-        Ratio<double> r1(value);
-        Ratio<double> r2(Ratio<double>::convertFloatToRatio(value, 4));
+        Ratio<int> r1(value);
+        Ratio<int> r2(Ratio<int>::convertFloatToRatio(value, 4));
 
 	    ASSERT_EQ (r1, r2);
     }
