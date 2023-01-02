@@ -5,7 +5,7 @@
 #include <limits>
 #include <fstream>
 #include <cmath>
-
+#include <cassert>
 
 // Doxygen menu
 /// \version 0.1
@@ -43,7 +43,16 @@ class Ratio{
 		/// \brief constructor from a numerator and denominator
 		/// \param numerator : the numerator of the rational number
 		/// \param denominator : the denominator of the rational number
-		Ratio(const T& numerator, const T &denominator) : m_num(numerator), m_den(denominator) {this->reduce();};
+		Ratio(const T& numerator, const T &denominator) : m_num(numerator), m_den(denominator) {
+			if(denominator == 0){
+				throw std::invalid_argument("You can't divide by 0 (infinite values not managed).");
+			}
+
+			this->reduce();
+
+			assert((this->m_den != 0) && "m_den should not be 0");
+			assert((this->m_den > 0) && "m_den should not be negative");
+		};
 
 
 		/// \brief constructor from a value number, convert it into a rational number
@@ -227,8 +236,12 @@ class Ratio{
 template <typename T>
 Ratio<T>::Ratio(const double& value){
 	const Ratio<T> r(convertFloatToRatio(value,4));
+
 	this->m_num = r.getNumerator();
 	this->m_den = r.getDenominator();
+
+	assert((this->m_den != 0) && "m_den should not be 0");
+	assert((this->m_den > 0) && "m_den should not be negative");
 }
 
 //------------------------------ARITHMETICS OPERATORS--------------------------------------//
@@ -496,8 +509,7 @@ Ratio<T> Ratio<T>::convertFloatToRatio(const double &x, unsigned int nbIter){
 template <typename T>
 float Ratio<T>::convertRatioToFloat(const Ratio &r){
 
-    if (r.m_den == 0)
-        throw std::overflow_error("You can't divide by Zero !");
+	assert((r.getDenominator() != 0) && "m_den should not be 0");
 		
     return r.m_num/(float)r.m_den;
 }

@@ -275,6 +275,8 @@ TEST (RatioArithmetic, sinRatio) {
         ASSERT_EQ (r2 / r1, r4);
     }
 }
+
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
