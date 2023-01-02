@@ -12,6 +12,7 @@
 #### Install with cmake (Linux / Mac)
 
 + Just include Ratio.hpp file in yours include files
+    + [path to build]/ratio/include/Ratio.hpp
 
 + For this example project : if Doxygen installed: make html
 
