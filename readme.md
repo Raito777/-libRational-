@@ -7,7 +7,7 @@
 ## How to install
 #### Dependecies
 
-> Nothing exept Doxygen for this project (if you want the documentation).
+> Nothing exept Doxygen for this project (if you want the documentation). Googletest is directly included in this project.
 
 #### Install with cmake (Linux / Mac)
 
